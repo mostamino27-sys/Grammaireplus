@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrammairePlus - Plateforme d'Apprentissage</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { font-size: 1.15em; opacity: 0.95; margin-bottom: 20px; }
+        .author {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 3px solid #ddd;
+        }
+        .tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .tab:hover { background: #e8e8e8; }
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 4px solid #667eea;
+        }
+        .tab-content {
+            padding: 40px 30px;
+            display: none;
+        }
+        .tab-content.active { display: block; }
+        h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        .intro {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .input-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+        textarea { resize: vertical; min-height: 120px; }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+        }
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            border-left: 4px solid #667eea;
+        }
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #c33;
+        }
+        .success { background: #efe; color: #373; }
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .example-card {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .example-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .example-card h4 { color: #667eea; margin-bottom: 8px; }
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9em;
+        }
+        footer p { margin: 5px 0; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            .tabs { flex-direction: column; }
+            .tab-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 GrammairePlus</h1>
+            <p class="subtitle">Plateforme d'Apprentissage de la Grammaire Française</p>
+            <div class="author">
+                <p><strong>Développé par:</strong> Bettahar Abdelkrim</p>
+                <p><strong>Enseignant de Français</strong></p>
+                <p>Université de Mostaganem - Master 2 Sciences du Langage</p>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('lecon')">📖 Leçon</button>
+            <button class="tab" onclick="switchTab('correction')">✏️ Correction</button>
+            <button class="tab" onclick="switchTab('exercices')">📝 Exercices</button>
+            <button class="tab" onclick="switchTab('assistant')">💬 Assistant</button>
+        </div>
+
+        <div id="lecon" class="tab-content active">
+            <h2>📖 Rechercher une Leçon</h2>
+            <p class="intro">Entrez le sujet grammatical que vous souhaitez apprendre</p>
+
+            <div class="input-group">
+                <label>Sujet de la leçon:</label>
+                <input type="text" id="lesson-topic" placeholder="Ex: le passé composé, les articles, les adjectifs...">
+            </div>
+
+            <div class="examples">
+                <div class="example-card" onclick="quickLesson('le passe compose')">
+                    <h4>Le Passé Composé</h4>
+                    <p>Temps du passé</p>
+                </div>
+                <div class="example-card" onclick="quickLesson('les articles definis')">
+                    <h4>Les Articles</h4>
+                    <p>Le, la, les, un, une, des</p>
+                </div>
+                <div class="example-card" onclick="quickLesson('les adjectifs possessifs')">
+                    <h4>Adjectifs Possessifs</h4>
+                    <p>Mon, ton, son...</p>
+                </div>
+                <div class="example-card" onclick="quickLesson('le futur simple')">
+                    <h4>Le Futur Simple</h4>
+                    <p>Temps du futur</p>
+                </div>
+            </div>
+
+            <button onclick="getLesson()" class="btn-primary">🔍 Générer la Leçon Complète</button>
+            <div id="lesson-result" class="result"></div>
+        </div>
+
+        <div id="correction" class="tab-content">
+            <h2>✏️ Correction de Phrase</h2>
+            <p class="intro">Écrivez une phrase et obtenez une correction détaillée</p>
+
+            <div class="input-group">
+                <label>Phrase à corriger:</label>
+                <textarea id="correct-text" placeholder="Ex: Je suis aller au cinema hier..."></textarea>
+            </div>
+
+            <button onclick="correctSentence()" class="btn-primary">✅ Corriger</button>
+            <div id="correct-result" class="result"></div>
+        </div>
+
+        <div id="exercices" class="tab-content">
+            <h2>📝 Exercices Pratiques</h2>
+            <p class="intro">Générez des exercices personnalisés</p>
+
+            <div class="input-group">
+                <label>Sujet des exercices:</label>
+                <input type="text" id="exercise-topic" placeholder="Ex: les verbes du 1er groupe">
+            </div>
+
+            <div class="input-group">
+                <label>Niveau:</label>
+                <select id="exercise-level">
+                    <option value="debutant">Débutant (A1-A2)</option>
+                    <option value="intermediaire" selected>Intermédiaire (B1-B2)</option>
+                    <option value="avance">Avancé (C1-C2)</option>
+                </select>
+            </div>
+
+            <button onclick="generateExercise()" class="btn-primary">📝 Générer les Exercices</button>
+            <div id="exercise-result" class="result"></div>
+        </div>
+
+        <div id="assistant" class="tab-content">
+            <h2>💬 Assistant Personnel</h2>
+            <p class="intro">Posez vos questions sur la grammaire française</p>
+
+            <div class="input-group">
+                <label>Votre question:</label>
+                <textarea id="assistant-question" rows="4" placeholder="Ex: Quelle est la différence entre COD et COI ?"></textarea>
+            </div>
+
+            <button onclick="askAssistant()" class="btn-primary">💬 Poser la Question</button>
+            <div id="assistant-result" class="result"></div>
+        </div>
+
+        <footer>
+            <p><strong>© 2025 GrammairePlus</strong></p>
+            <p>Plateforme d'Apprentissage de la Grammaire Française</p>
+            <p>Développé par Bettahar Abdelkrim</p>
+            <p>Université de Mostaganem - Master 2 Sciences du Langage</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function formatResult(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        }
+
+        function quickLesson(topic) {
+            document.getElementById('lesson-topic').value = topic;
+            getLesson();
+        }
+
+        async function getLesson() {
+            const topic = document.getElementById('lesson-topic').value.trim();
+            const resultDiv = document.getElementById('lesson-result');
+
+            if (!topic) {
+                resultDiv.innerHTML = '<div class="error">⚠️ Entrez un sujet</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">📖 Génération de la leçon...</div>';
+
+            try {
+                const response = await fetch('/api/lesson', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({topic})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="error">❌ Erreur de connexion</div>';
+            }
+        }
+
+        async function correctSentence() {
+            const sentence = document.getElementById('correct-text').value.trim();
+            const resultDiv = document.getElementById('correct-result');
+
+            if (!sentence) {
+                resultDiv.innerHTML = '<div class="error">⚠️ Entrez une phrase</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">✏️ Correction en cours...</div>';
+
+            try {
+                const response = await fetch('/api/correct', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({sentence})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="error">❌ Erreur</div>';
+            }
+        }
+
+        async function generateExercise() {
+            const topic = document.getElementById('exercise-topic').value.trim();
+            const level = document.getElementById('exercise-level').value;
+            const resultDiv = document.getElementById('exercise-result');
+
+            if (!topic) {
+                resultDiv.innerHTML = '<div class="error">⚠️ Entrez un sujet</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">📝 Génération des exercices...</div>';
+
+            try {
+                const response = await fetch('/api/exercise', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({topic, level})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="error">❌ Erreur</div>';
+            }
+        }
+
+        async function askAssistant() {
+            const question = document.getElementById('assistant-question').value.trim();
+            const resultDiv = document.getElementById('assistant-result');
+
+            if (!question) {
+                resultDiv.innerHTML = '<div class="error">⚠️ Entrez une question</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">💬 Réponse en cours...</div>';
+
+            try {
+                const response = await fetch('/api/assistant', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({question})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="error">❌ Erreur</div>';
+            }
+        }
+    </script>
+</body>
+</html>
