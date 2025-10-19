@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrammairePlus - Plateforme Interactive</title>
+    <title>GrammairePlus - Plateforme d'Apprentissage</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -19,35 +19,24 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
-            animation: fadeIn 0.5s;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 50px 30px;
             text-align: center;
         }
-        header h1 { font-size: 2.8em; margin-bottom: 10px; animation: slideDown 0.6s; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        .subtitle { font-size: 1.2em; opacity: 0.95; margin-bottom: 20px; }
-        .author {
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 0.9em;
-            backdrop-filter: blur(10px);
-        }
+        header h1 { font-size: 3em; margin-bottom: 15px; }
+        .subtitle { font-size: 1.2em; opacity: 0.95; }
         .tabs {
             display: flex;
-            background: linear-gradient(to right, #f5f5f5, #e8e8e8);
+            background: #f5f5f5;
             overflow-x: auto;
             border-bottom: 3px solid #ddd;
         }
         .tab {
             flex: 1;
-            min-width: 140px;
+            min-width: 130px;
             padding: 18px 10px;
             text-align: center;
             cursor: pointer;
@@ -57,9 +46,8 @@
             font-weight: 600;
             color: #666;
             transition: all 0.3s;
-            position: relative;
         }
-        .tab:hover { background: #e0e0e0; transform: translateY(-2px); }
+        .tab:hover { background: #e0e0e0; }
         .tab.active {
             background: white;
             color: #667eea;
@@ -68,20 +56,10 @@
         .tab-content {
             padding: 40px 30px;
             display: none;
-            animation: fadeInUp 0.4s;
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .tab-content.active { display: block; }
-        h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.9em;
-        }
-        .intro {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
+        h2 { color: #667eea; margin-bottom: 15px; font-size: 1.9em; }
+        .intro { color: #666; margin-bottom: 25px; line-height: 1.7; }
         .input-group { margin-bottom: 20px; }
         label {
             display: block;
@@ -116,14 +94,11 @@
             width: 100%;
             margin-bottom: 10px;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
         }
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(102,126,234,0.4);
         }
-        .btn-primary:active { transform: translateY(-1px); }
         .result {
             margin-top: 30px;
             padding: 25px;
@@ -132,16 +107,12 @@
             white-space: pre-wrap;
             line-height: 1.9;
             border-left: 5px solid #667eea;
-            animation: slideIn 0.4s;
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         .loading {
             text-align: center;
             color: #667eea;
             font-weight: 600;
-            animation: pulse 1.5s infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .error {
             background: #fee;
             color: #c33;
@@ -152,29 +123,28 @@
         .success { background: #efe; color: #373; border-left-color: #373; }
         .examples {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
         .example-card {
-            background: linear-gradient(135deg, #f9f9f9, #fff);
+            background: #f9f9f9;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
             padding: 18px;
             cursor: pointer;
             transition: all 0.3s;
-            position: relative;
         }
         .example-card:hover {
             border-color: #667eea;
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(102,126,234,0.2);
         }
-        .example-card h4 { color: #667eea; margin-bottom: 8px; font-size: 1.1em; }
+        .example-card h4 { color: #667eea; margin-bottom: 8px; }
         .example-card p { color: #666; font-size: 0.9em; }
         .quick-actions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin: 25px 0;
         }
@@ -198,14 +168,12 @@
             background: linear-gradient(135deg, #2d3748, #1a202c);
             color: white;
             text-align: center;
-            padding: 35px;
+            padding: 40px;
             font-size: 0.9em;
         }
-        footer p { margin: 6px 0; }
+        footer p { margin: 8px 0; }
         @media (max-width: 768px) {
             header h1 { font-size: 2em; }
-            .tabs { flex-direction: row; overflow-x: scroll; }
-            .tab { min-width: 120px; font-size: 0.85em; }
             .tab-content { padding: 25px 20px; }
         }
     </style>
@@ -214,12 +182,7 @@
     <div class="container">
         <header>
             <h1>📚 GrammairePlus</h1>
-            <p class="subtitle">Plateforme Interactive d'Apprentissage de la Grammaire Française</p>
-            <div class="author">
-                <p><strong>🎓 Développé par:</strong> Bettahar Abdelkrim</p>
-                <p>Enseignant de Français - Université de Mostaganem</p>
-                <p>Master 2 Sciences du Langage</p>
-            </div>
+            <p class="subtitle">Plateforme d'Apprentissage de la Grammaire Française</p>
         </header>
 
         <div class="tabs">
@@ -234,13 +197,13 @@
 
         <div id="lecon" class="tab-content active">
             <h2>📖 Rechercher une Leçon</h2>
-            <p class="intro">Entrez le sujet grammatical que vous souhaitez apprendre en détail</p>
-
+            <p class="intro">Entrez le sujet grammatical que vous souhaitez apprendre</p>
+            
             <div class="input-group">
                 <label>Sujet de la leçon:</label>
-                <input type="text" id="lesson-topic" placeholder="Ex: le passé composé, les articles, les pronoms...">
+                <input type="text" id="lesson-topic" placeholder="Ex: le passé composé">
             </div>
-
+            
             <div class="examples">
                 <div class="example-card" onclick="quickLesson('le passe compose')">
                     <h4>Le Passé Composé</h4>
@@ -259,52 +222,52 @@
                     <p>Conjugaison</p>
                 </div>
             </div>
-
-            <button onclick="getLesson()" class="btn-primary">🔍 Générer la Leçon Complète</button>
-            <div id="lesson-result" class="result"></div>
+            
+            <button onclick="getLesson()" class="btn-primary">🔍 Générer la Leçon</button>
+            <div id="lesson-result"></div>
         </div>
 
         <div id="conjugaison" class="tab-content">
             <h2>📘 Conjugaison de Verbes</h2>
-            <p class="intro">Conjuguez n'importe quel verbe français à tous les temps</p>
-
+            <p class="intro">Conjuguez n'importe quel verbe français</p>
+            
             <div class="input-group">
                 <label>Verbe à conjuguer:</label>
-                <input type="text" id="conjugate-verb" placeholder="Ex: manger, finir, aller, être...">
+                <input type="text" id="conjugate-verb" placeholder="Ex: manger">
             </div>
-
+            
             <div class="quick-actions">
                 <div class="action-btn" onclick="quickConjugate('etre')">Être</div>
                 <div class="action-btn" onclick="quickConjugate('avoir')">Avoir</div>
                 <div class="action-btn" onclick="quickConjugate('aller')">Aller</div>
                 <div class="action-btn" onclick="quickConjugate('faire')">Faire</div>
             </div>
-
+            
             <button onclick="conjugateVerb()" class="btn-primary">📘 Conjuguer</button>
-            <div id="conjugate-result" class="result"></div>
+            <div id="conjugate-result"></div>
         </div>
 
         <div id="test" class="tab-content">
             <h2>📊 Test d'Évaluation</h2>
-            <p class="intro">Testez vos connaissances avec 10 questions adaptées à votre niveau</p>
-
+            <p class="intro">Testez vos connaissances avec 10 questions</p>
+            
             <div class="input-group">
-                <label>Choisissez votre niveau:</label>
+                <label>Niveau:</label>
                 <select id="test-level">
                     <option value="debutant">Débutant (A1-A2)</option>
                     <option value="intermediaire" selected>Intermédiaire (B1-B2)</option>
                     <option value="avance">Avancé (C1-C2)</option>
                 </select>
             </div>
-
+            
             <button onclick="generateTest()" class="btn-primary">📊 Générer le Test</button>
-            <div id="test-result" class="result"></div>
+            <div id="test-result"></div>
         </div>
 
         <div id="histoire" class="tab-content">
             <h2>📚 Histoire Interactive</h2>
-            <p class="intro">Lisez des histoires adaptées à votre niveau avec questions de compréhension</p>
-
+            <p class="intro">Lisez des histoires adaptées à votre niveau</p>
+            
             <div class="input-group">
                 <label>Niveau:</label>
                 <select id="story-level">
@@ -313,7 +276,7 @@
                     <option value="avance">Avancé (C1-C2)</option>
                 </select>
             </div>
-
+            
             <div class="input-group">
                 <label>Thème:</label>
                 <select id="story-theme">
@@ -324,33 +287,33 @@
                     <option value="voyage">Voyage</option>
                 </select>
             </div>
-
+            
             <button onclick="generateStory()" class="btn-primary">📚 Générer l'Histoire</button>
-            <div id="story-result" class="result"></div>
+            <div id="story-result"></div>
         </div>
 
         <div id="correction" class="tab-content">
             <h2>✏️ Correction de Phrase</h2>
-            <p class="intro">Écrivez une phrase et obtenez une correction détaillée avec explications</p>
-
+            <p class="intro">Écrivez une phrase et obtenez une correction détaillée</p>
+            
             <div class="input-group">
                 <label>Phrase à corriger:</label>
-                <textarea id="correct-text" placeholder="Ex: Je suis aller au cinema hier avec mes amis..."></textarea>
+                <textarea id="correct-text" placeholder="Ex: Je suis aller au cinema hier..."></textarea>
             </div>
-
+            
             <button onclick="correctSentence()" class="btn-primary">✅ Corriger</button>
-            <div id="correct-result" class="result"></div>
+            <div id="correct-result"></div>
         </div>
 
         <div id="exercices" class="tab-content">
             <h2>📝 Exercices Pratiques</h2>
-            <p class="intro">Générez des exercices personnalisés sur n'importe quel sujet</p>
-
+            <p class="intro">Générez des exercices personnalisés</p>
+            
             <div class="input-group">
                 <label>Sujet des exercices:</label>
-                <input type="text" id="exercise-topic" placeholder="Ex: les verbes du 1er groupe, les pronoms...">
+                <input type="text" id="exercise-topic" placeholder="Ex: les verbes du 1er groupe">
             </div>
-
+            
             <div class="input-group">
                 <label>Niveau:</label>
                 <select id="exercise-level">
@@ -359,29 +322,30 @@
                     <option value="avance">Avancé (C1-C2)</option>
                 </select>
             </div>
-
+            
             <button onclick="generateExercise()" class="btn-primary">📝 Générer les Exercices</button>
-            <div id="exercise-result" class="result"></div>
+            <div id="exercise-result"></div>
         </div>
 
         <div id="assistant" class="tab-content">
             <h2>💬 Assistant Personnel</h2>
-            <p class="intro">Posez n'importe quelle question sur la grammaire française</p>
-
+            <p class="intro">Posez vos questions sur la grammaire</p>
+            
             <div class="input-group">
                 <label>Votre question:</label>
-                <textarea id="assistant-question" rows="4" placeholder="Ex: Quelle est la différence entre COD et COI ? Comment utiliser le subjonctif ?"></textarea>
+                <textarea id="assistant-question" rows="4" placeholder="Ex: Quelle est la différence entre COD et COI ?"></textarea>
             </div>
-
+            
             <button onclick="askAssistant()" class="btn-primary">💬 Poser la Question</button>
-            <div id="assistant-result" class="result"></div>
+            <div id="assistant-result"></div>
         </div>
 
         <footer>
             <p><strong>© 2025 GrammairePlus</strong></p>
-            <p>🎓 Plateforme Interactive d'Apprentissage de la Grammaire Française</p>
-            <p>Développé par <strong>Bettahar Abdelkrim</strong></p>
-            <p>Enseignant de Français - Université de Mostaganem</p>
+            <p>Plateforme d'Apprentissage de la Grammaire Française</p>
+            <p style="margin-top:20px; font-size:1.05em;"><strong>Développé par Bettahar Abdelkrim</strong></p>
+            <p>Enseignant de Français</p>
+            <p>Université de Mostaganem - Département de Français</p>
             <p>Master 2 Sciences du Langage</p>
         </footer>
     </div>
@@ -392,10 +356,6 @@
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
-        }
-
-        function formatResult(text) {
-            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         }
 
         function quickLesson(topic) {
@@ -411,25 +371,25 @@
         async function getLesson() {
             const topic = document.getElementById('lesson-topic').value.trim();
             const resultDiv = document.getElementById('lesson-result');
-
+            
             if (!topic) {
                 resultDiv.innerHTML = '<div class="error">⚠️ Entrez un sujet</div>';
                 return;
             }
-
-            resultDiv.innerHTML = '<div class="loading">📖 Génération de la leçon en cours...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">📖 Génération en cours...</div>';
+            
             try {
                 const response = await fetch('/api/lesson', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({topic})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -441,25 +401,25 @@
         async function conjugateVerb() {
             const verb = document.getElementById('conjugate-verb').value.trim();
             const resultDiv = document.getElementById('conjugate-result');
-
+            
             if (!verb) {
                 resultDiv.innerHTML = '<div class="error">⚠️ Entrez un verbe</div>';
                 return;
             }
-
-            resultDiv.innerHTML = '<div class="loading">📘 Conjugaison en cours...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">📘 Conjugaison en cours...</div>';
+            
             try {
                 const response = await fetch('/api/conjugate', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({verb})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -471,20 +431,20 @@
         async function generateTest() {
             const level = document.getElementById('test-level').value;
             const resultDiv = document.getElementById('test-result');
-
-            resultDiv.innerHTML = '<div class="loading">📊 Génération du test...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">📊 Génération du test...</div>';
+            
             try {
                 const response = await fetch('/api/test', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({level})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -497,20 +457,20 @@
             const level = document.getElementById('story-level').value;
             const theme = document.getElementById('story-theme').value;
             const resultDiv = document.getElementById('story-result');
-
-            resultDiv.innerHTML = '<div class="loading">📚 Création de l'histoire...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">📚 Création de l\'histoire...</div>';
+            
             try {
                 const response = await fetch('/api/story', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({level, theme})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -522,25 +482,25 @@
         async function correctSentence() {
             const sentence = document.getElementById('correct-text').value.trim();
             const resultDiv = document.getElementById('correct-result');
-
+            
             if (!sentence) {
                 resultDiv.innerHTML = '<div class="error">⚠️ Entrez une phrase</div>';
                 return;
             }
-
-            resultDiv.innerHTML = '<div class="loading">✏️ Correction en cours...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">✏️ Correction en cours...</div>';
+            
             try {
                 const response = await fetch('/api/correct', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({sentence})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -553,25 +513,25 @@
             const topic = document.getElementById('exercise-topic').value.trim();
             const level = document.getElementById('exercise-level').value;
             const resultDiv = document.getElementById('exercise-result');
-
+            
             if (!topic) {
                 resultDiv.innerHTML = '<div class="error">⚠️ Entrez un sujet</div>';
                 return;
             }
-
-            resultDiv.innerHTML = '<div class="loading">📝 Génération des exercices...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">📝 Génération des exercices...</div>';
+            
             try {
                 const response = await fetch('/api/exercise', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({topic, level})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
@@ -583,25 +543,25 @@
         async function askAssistant() {
             const question = document.getElementById('assistant-question').value.trim();
             const resultDiv = document.getElementById('assistant-result');
-
+            
             if (!question) {
                 resultDiv.innerHTML = '<div class="error">⚠️ Entrez une question</div>';
                 return;
             }
-
-            resultDiv.innerHTML = '<div class="loading">💬 Réponse en cours...</div>';
-
+            
+            resultDiv.innerHTML = '<div class="result loading">💬 Réponse en cours...</div>';
+            
             try {
                 const response = await fetch('/api/assistant', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({question})
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    resultDiv.innerHTML = `<div class="success">${formatResult(data.result)}</div>`;
+                    resultDiv.innerHTML = `<div class="result success">${data.result}</div>`;
                 } else {
                     resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                 }
