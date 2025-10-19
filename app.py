@@ -20,10 +20,7 @@ def call_ai(messages):
             'Authorization': f'Bearer {OPENROUTER_API_KEY}',
             'Content-Type': 'application/json'
         },
-        json={
-            'model': MODEL,
-            'messages': messages
-        },
+        json={'model': MODEL, 'messages': messages},
         timeout=90
     )
     
@@ -41,27 +38,15 @@ def get_lesson():
     try:
         data = request.get_json()
         topic = data.get('topic', '').strip()
-        
         if not topic:
             return jsonify({'error': 'Sujet requis', 'success': False}), 400
         
-        prompt = f"""Cree une lecon complete sur: {topic}
-
-Format:
-1. EXPLICATION (150 mots)
-2. EXEMPLES (8 exemples)
-3. EXERCICES (5 questions)
-4. CORRIGES (solutions)
-
-Reponds en francais."""
-
+        prompt = f"Cree une lecon complete sur: {topic}. Format: 1.EXPLICATION 2.EXEMPLES 3.EXERCICES 4.CORRIGES"
         result = call_ai([
             {'role': 'system', 'content': 'Tu es un professeur de francais.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -70,34 +55,15 @@ def conjugate_verb():
     try:
         data = request.get_json()
         verb = data.get('verb', '').strip()
-        
         if not verb:
             return jsonify({'error': 'Verbe requis', 'success': False}), 400
         
-        prompt = f"""Conjugue le verbe: {verb}
-
-Format:
-PRESENT:
-je, tu, il, nous, vous, ils
-
-PASSE COMPOSE:
-conjugaisons completes
-
-FUTUR SIMPLE:
-conjugaisons completes
-
-IMPARFAIT:
-conjugaisons completes
-
-Reponds en francais avec tableaux."""
-
+        prompt = f"Conjugue le verbe: {verb} au present, passe compose, futur simple et imparfait"
         result = call_ai([
-            {'role': 'system', 'content': 'Tu es un expert en conjugaison francaise.'},
+            {'role': 'system', 'content': 'Expert en conjugaison francaise.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -106,26 +72,12 @@ def generate_test():
     try:
         data = request.get_json()
         level = data.get('level', 'intermediaire')
-        
-        prompt = f"""Cree un test de 10 questions de niveau {level}.
-
-Format pour chaque question:
-Question: [question]
-A) [option]
-B) [option]
-C) [option]
-Reponse correcte: [A/B/C]
-Explication: [pourquoi]
-
-Reponds en francais."""
-
+        prompt = f"Cree un test de 10 questions niveau {level} avec reponses"
         result = call_ai([
-            {'role': 'system', 'content': 'Tu es un createur de tests de francais.'},
+            {'role': 'system', 'content': 'Createur de tests.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -135,24 +87,12 @@ def generate_story():
         data = request.get_json()
         level = data.get('level', 'intermediaire')
         theme = data.get('theme', 'quotidien')
-        
-        prompt = f"""Cree une histoire courte de niveau {level} sur le theme: {theme}
-
-Format:
-1. HISTOIRE (200 mots)
-2. VOCABULAIRE CLE (10 mots avec definitions)
-3. QUESTIONS DE COMPREHENSION (5 questions)
-4. REPONSES
-
-Reponds en francais."""
-
+        prompt = f"Cree une histoire niveau {level} theme: {theme} avec vocabulaire et questions"
         result = call_ai([
-            {'role': 'system', 'content': 'Tu es un createur dhistoires pedagogiques.'},
+            {'role': 'system', 'content': 'Createur dhistoires.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -161,26 +101,15 @@ def correct_sentence():
     try:
         data = request.get_json()
         sentence = data.get('sentence', '').strip()
-        
         if not sentence:
             return jsonify({'error': 'Phrase requise', 'success': False}), 400
         
-        prompt = f"""Corrige: {sentence}
-
-Format:
-Phrase corrigee:
-Erreurs:
-Explication:
-
-Reponds en francais."""
-
+        prompt = f"Corrige cette phrase et explique: {sentence}"
         result = call_ai([
             {'role': 'system', 'content': 'Correcteur francais.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -190,18 +119,15 @@ def generate_exercise():
         data = request.get_json()
         topic = data.get('topic', '').strip()
         level = data.get('level', 'intermediaire')
+        if not topic:
+            return jsonify({'error': 'Sujet requis', 'success': False}), 400
         
-        prompt = f"""Cree 5 exercices {level} sur: {topic}
-
-Reponds en francais."""
-
+        prompt = f"Cree 5 exercices niveau {level} sur: {topic}"
         result = call_ai([
             {'role': 'system', 'content': 'Createur dexercices.'},
             {'role': 'user', 'content': prompt}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
@@ -210,17 +136,14 @@ def assistant():
     try:
         data = request.get_json()
         question = data.get('question', '').strip()
-        
         if not question:
             return jsonify({'error': 'Question requise', 'success': False}), 400
         
         result = call_ai([
-            {'role': 'system', 'content': 'Assistant pedagogique francais.'},
+            {'role': 'system', 'content': 'Assistant pedagogique.'},
             {'role': 'user', 'content': question}
         ])
-        
         return jsonify({'result': result, 'success': True})
-        
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
 
