@@ -6,34 +6,99 @@
     <title>GrammairePlus - Plateforme d'Apprentissage</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-body: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-container: white;
+            --bg-header: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: white;
+            --bg-tabs: #f5f5f5;
+            --bg-tab-hover: #e0e0e0;
+            --bg-result: #f9f9f9;
+            --bg-card: #f9f9f9;
+            --border-color: #ddd;
+            --border-card: #e0e0e0;
+            --accent-color: #667eea;
+        }
+        
+        body.dark-mode {
+            --bg-body: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --bg-container: #0f1419;
+            --bg-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-header: white;
+            --bg-tabs: #1a1f2e;
+            --bg-tab-hover: #252b3b;
+            --bg-result: #1a1f2e;
+            --bg-card: #1a1f2e;
+            --border-color: #2d3748;
+            --border-card: #2d3748;
+            --accent-color: #8b7ff4;
+        }
+        
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-body);
             min-height: 100vh;
             padding: 20px;
+            transition: all 0.3s ease;
         }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-container);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
+            transition: all 0.3s ease;
         }
+        
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--bg-header);
+            color: var(--text-header);
             padding: 50px 30px;
             text-align: center;
+            position: relative;
         }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        
         header h1 { font-size: 3em; margin-bottom: 15px; }
         .subtitle { font-size: 1.2em; opacity: 0.95; }
+        
         .tabs {
             display: flex;
-            background: #f5f5f5;
+            background: var(--bg-tabs);
             overflow-x: auto;
-            border-bottom: 3px solid #ddd;
+            border-bottom: 3px solid var(--border-color);
+            transition: all 0.3s;
         }
+        
         .tab {
             flex: 1;
             min-width: 130px;
@@ -44,44 +109,58 @@
             background: none;
             font-size: 0.95em;
             font-weight: 600;
-            color: #666;
+            color: var(--text-secondary);
             transition: all 0.3s;
         }
-        .tab:hover { background: #e0e0e0; }
+        
+        .tab:hover { background: var(--bg-tab-hover); }
+        
         .tab.active {
-            background: white;
-            color: #667eea;
-            border-bottom: 4px solid #667eea;
+            background: var(--bg-container);
+            color: var(--accent-color);
+            border-bottom: 4px solid var(--accent-color);
         }
+        
         .tab-content {
             padding: 40px 30px;
             display: none;
+            color: var(--text-primary);
+            transition: all 0.3s;
         }
+        
         .tab-content.active { display: block; }
-        h2 { color: #667eea; margin-bottom: 15px; font-size: 1.9em; }
-        .intro { color: #666; margin-bottom: 25px; line-height: 1.7; }
+        
+        h2 { color: var(--accent-color); margin-bottom: 15px; font-size: 1.9em; }
+        .intro { color: var(--text-secondary); margin-bottom: 25px; line-height: 1.7; }
         .input-group { margin-bottom: 20px; }
+        
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: var(--text-primary);
         }
+        
         input, textarea, select {
             width: 100%;
             padding: 15px;
-            border: 2px solid #ddd;
+            border: 2px solid var(--border-color);
             border-radius: 10px;
             font-size: 1em;
             font-family: inherit;
             transition: all 0.3s;
+            background: var(--bg-container);
+            color: var(--text-primary);
         }
+        
         textarea { resize: vertical; min-height: 120px; }
+        
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
+        
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -95,24 +174,30 @@
             margin-bottom: 10px;
             transition: all 0.3s;
         }
+        
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(102,126,234,0.4);
         }
+        
         .result {
             margin-top: 30px;
             padding: 25px;
             border-radius: 12px;
-            background: #f9f9f9;
+            background: var(--bg-result);
             white-space: pre-wrap;
             line-height: 1.9;
-            border-left: 5px solid #667eea;
+            border-left: 5px solid var(--accent-color);
+            color: var(--text-primary);
+            transition: all 0.3s;
         }
+        
         .loading {
             text-align: center;
-            color: #667eea;
+            color: var(--accent-color);
             font-weight: 600;
         }
+        
         .error {
             background: #fee;
             color: #c33;
@@ -120,38 +205,49 @@
             border-radius: 10px;
             border-left: 5px solid #c33;
         }
-        .success { background: #efe; color: #373; border-left-color: #373; }
+        
+        .success { 
+            background: var(--bg-result); 
+            color: var(--text-primary); 
+            border-left-color: var(--accent-color);
+        }
+        
         .examples {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
+        
         .example-card {
-            background: #f9f9f9;
-            border: 2px solid #e0e0e0;
+            background: var(--bg-card);
+            border: 2px solid var(--border-card);
             border-radius: 12px;
             padding: 18px;
             cursor: pointer;
             transition: all 0.3s;
         }
+        
         .example-card:hover {
-            border-color: #667eea;
+            border-color: var(--accent-color);
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(102,126,234,0.2);
         }
-        .example-card h4 { color: #667eea; margin-bottom: 8px; }
-        .example-card p { color: #666; font-size: 0.9em; }
+        
+        .example-card h4 { color: var(--accent-color); margin-bottom: 8px; }
+        .example-card p { color: var(--text-secondary); font-size: 0.9em; }
+        
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin: 25px 0;
         }
+        
         .action-btn {
-            background: white;
-            border: 2px solid #667eea;
-            color: #667eea;
+            background: var(--bg-container);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
             padding: 15px;
             border-radius: 10px;
             cursor: pointer;
@@ -159,11 +255,13 @@
             transition: all 0.3s;
             text-align: center;
         }
+        
         .action-btn:hover {
-            background: #667eea;
+            background: var(--accent-color);
             color: white;
             transform: scale(1.05);
         }
+        
         footer {
             background: linear-gradient(135deg, #2d3748, #1a202c);
             color: white;
@@ -171,9 +269,12 @@
             padding: 40px;
             font-size: 0.9em;
         }
+        
         footer p { margin: 8px 0; }
+        
         @media (max-width: 768px) {
             header h1 { font-size: 2em; }
+            .theme-toggle { top: 15px; right: 15px; width: 45px; height: 45px; }
             .tab-content { padding: 25px 20px; }
         }
     </style>
@@ -181,6 +282,7 @@
 <body>
     <div class="container">
         <header>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
             <h1>📚 GrammairePlus</h1>
             <p class="subtitle">Plateforme d'Apprentissage de la Grammaire Française</p>
         </header>
@@ -351,6 +453,23 @@
     </div>
 
     <script>
+        // Dark Mode Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('darkMode');
+            if (savedTheme === 'true') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggle').textContent = '☀️';
+            }
+        });
+        
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
